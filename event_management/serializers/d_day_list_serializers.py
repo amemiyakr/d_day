@@ -4,7 +4,7 @@ from event_management.models import *
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = EventUser
         fields = '__all__'
 
 

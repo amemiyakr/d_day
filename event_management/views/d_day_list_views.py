@@ -9,7 +9,7 @@ class UserView(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = User.objects.all()
+    queryset = EventUser.objects.all()
     serializer_class = UserSerializer
 
 
@@ -24,7 +24,7 @@ class EventDayView(viewsets.ModelViewSet):
 class GetUserLstView(APIView):
 
     def get(self, request):
-        user_list = User.objects.all()
+        user_list = EventUser.objects.all()
         serializer = UserSerializer(user_list, many='true')
 
         return Response(serializer.data)
