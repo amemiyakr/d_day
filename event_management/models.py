@@ -1,17 +1,13 @@
 import uuid
-
 from django.db import models
+from common.models import BaseModel
 
 
-class MyUUIDModel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-
-class EventDay(models.Model):
+class EventDay(BaseModel):
     """　記念日モデル　"""
 
     # 項目ID
-    id = MyUUIDModel()
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # イベント名称
     name = models.CharField(max_length=25, default="")
     # イベント日時
@@ -20,34 +16,38 @@ class EventDay(models.Model):
     local = models.CharField(max_length=30, default="")
     # イベント内容
     content = models.CharField(max_length=100, default='')
-    # 基本項目　作成日、作成日時、更新日、更新日時、削除
-    create_at = models.DateTimeField(auto_now_add=True)
-    create_by = models.CharField(max_length=16, default="")
-    update_at = models.DateTimeField(auto_now=True)
-    update_by = models.CharField(max_length=16, default="")
-    is_delete = models.IntegerField(default=0)
 
     class Meta:
         db_table = "event_day"
 
 
-class User(models.Model):
-    """　ユーザモデル　"""
+class EventUser(BaseModel):
+    """　イベント参加者モデル　"""
 
     # 項目ID
-    id = MyUUIDModel()
-    # ユーザ名
-    name = models.CharField(max_length=25, default="")
-    # ユーザパスワード
-    password = models.CharField(max_length=32, default="")
-    # ユーザメール
-    mail = models.CharField(max_length=100, default='')
-    # 基本項目　作成日、作成日時、更新日、更新日時、削除
-    create_at = models.DateTimeField(auto_now_add=True)
-    create_by = models.CharField(max_length=16, default="")
-    update_at = models.DateTimeField(auto_now=True)
-    update_by = models.CharField(max_length=16, default="")
-    is_delete = models.IntegerField(default=0)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # イベントID
+    event_day = models.ForeignKey('EventDay', on_delete=models.PROTECT)
+    # ユーザID
+    user = models.ForeignKey('User', on_delete=models.PROTECT)
 
     class Meta:
-        db_table = "user"
+        db_table = "event_user"
+
+
+class User(BaseModel):
+    """ ユーザモデル """
+
+    # 姓
+    last_name = models.CharField(max_length=20, default='')
+    # 名
+    first_name = models.CharField(max_length=20, default='')
+    # 生年月日
+    birthday = models.DateField(null=True)
+    # 性別
+    sex = models.CharField(max_length=6, default='')
+    # メールアドレス
+    email = models.EmailField(max_length=50, default='')
+
+    class Meta:
+        db_table = 'user'
