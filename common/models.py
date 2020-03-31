@@ -11,7 +11,7 @@ class CommonModel(models.Model):
     is_deleted = models.CharField(null=False, default='0', max_length=1)
     # 作者
     created_user = models.SlugField(null=False, default=None, max_length=50)
-    # 更新人
+    # 更新者
     updated_user = models.SlugField(null=False, default=None, max_length=50)
     # 作成日
     created_at = models.DateTimeField(null=False, auto_now_add=True)
