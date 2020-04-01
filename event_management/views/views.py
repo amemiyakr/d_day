@@ -6,7 +6,7 @@ from django.db.models import F
 
 
 class MenuView(APIView):
-
+    #
     def get(self, request):
         temp_menu_list = Menu.objects.all().filter(pk=F('parent_id'))
         menu_serializer = MenuSerializers(temp_menu_list, many='true')
