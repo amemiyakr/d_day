@@ -51,3 +51,24 @@ class User(BaseModel):
 
     class Meta:
         db_table = 'user'
+
+
+class Menu(BaseModel):
+    """　メニュー　"""
+
+    # メニュー名
+    title = models.CharField(max_length=20, default='')
+    # アクセスURL
+    url = models.CharField(max_length=20, default='')
+    # 親メニューID
+    parent = models.ForeignKey('self', on_delete=models.PROTECT)
+    # Level
+    level = models.CharField(max_length=20, default='')
+    # 並び順
+    order = models.CharField(max_length=20, default='')
+    # icon
+    icon = models.CharField(max_length=50, default='')
+
+    class Meta:
+        db_table = "menu"
+

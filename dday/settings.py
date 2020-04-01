@@ -25,7 +25,10 @@ SECRET_KEY = 'e1lp+3og24b$63ii6tus-*4x&m7*@^^qimkyus(y57od29gg9!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    # 'localhost:8080',
+    '127.0.0.1',
+    ]
 
 
 # Application definition
@@ -40,16 +43,21 @@ INSTALLED_APPS = [
     'rest_framework',
     'common',
     'event_management',
+    # Cross-domain access
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # Cross-domain access
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'dday.urls'
@@ -72,6 +80,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dday.wsgi.application'
 
+# Cross-domain access
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
+)
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
